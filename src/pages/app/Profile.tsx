@@ -58,7 +58,7 @@ export function Profile() {
       name: "ASK. Finance",
       description: "Pro Plan Subscription",
       image: "https://ojbzfynwckkqwxwuatag.supabase.co/storage/v1/object/public/assets/logo.png", // Replace with your logo
-      handler: function (response: any) {
+      handler: function (_response: any) {
         updateUser({ subscription: 'pro' });
         setShowSuccessModal(true);
         // Here you would typically send the response to your backend
