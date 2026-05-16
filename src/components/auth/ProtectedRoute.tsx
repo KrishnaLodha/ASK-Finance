@@ -1,12 +1,18 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useFinanceStore } from '../../store/useFinanceStore';
 import { useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 
 export function ProtectedRoute() {
   const { session, setSession, isLoading } = useFinanceStore();
 
   useEffect(() => {
+    // If Supabase is not configured, skip auth and enter demo mode
+    if (!isSupabaseConfigured) {
+      setSession({} as any); // Set a truthy session to bypass auth
+      return;
+    }
+
     // Initial session check
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -34,3 +40,4 @@ export function ProtectedRoute() {
 
   return <Outlet />;
 }
+
